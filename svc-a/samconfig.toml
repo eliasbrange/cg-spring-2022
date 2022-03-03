@@ -1,0 +1,11 @@
+version = 0.1
+
+[default.global.parameters]
+stack_name = "ServiceA"
+
+[default.deploy]
+[default.deploy.parameters]
+confirm_changeset = false
+capabilities = "CAPABILITY_IAM"
+s3_prefix = "serviceA"
+region = "eu-west-1"
