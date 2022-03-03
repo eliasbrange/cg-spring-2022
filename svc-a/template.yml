@@ -6,6 +6,12 @@ Globals:
   Function:
     Timeout: 5
 
+Parameters:
+  TableName:
+    Type: AWS::SSM::Parameter::Value<String>
+    Description: Name of the DynamoDB table
+    Default: /eliasb/dynamodb_table_name
+
 Resources:
   Function:
     Type: AWS::Serverless::Function
@@ -16,11 +22,11 @@ Resources:
       Handler: app.handler
       Runtime: python3.9
       Policies:
-        - SSMParameterReadPolicy:
-            ParameterName: "eliasb/dynamodb_table_name"
+        - DynamoDBCrudPolicy:
+            TableName: !Ref TableName
       Environment:
         Variables:
-          DYNAMO_TABLE_SSM: "/eliasb/dynamodb_table_name"
+          TABLE_NAME: !Ref TableName
       Events:
         Api:
           Type: HttpApi

@@ -2,3 +2,4 @@
 .terraform.lock.hcl
 .aws-sam
 .venv
+.vscode
