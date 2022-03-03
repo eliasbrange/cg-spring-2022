@@ -16,3 +16,9 @@ resource "aws_dynamodb_table" "dynamo_table" {
     type = "S"
   }
 }
+
+resource "aws_ssm_parameter" "dynamo_table_name" {
+  name = "/eliasb/dynamodb_table_name"
+  type = "String"
+  value = "${aws_dynamodb_table.dynamo_table.name}"
+}
