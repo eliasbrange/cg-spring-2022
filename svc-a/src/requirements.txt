@@ -1,2 +1,3 @@
 mangum
 fastapi
+boto3

@@ -4,7 +4,7 @@ Description: Service A
 
 Globals:
   Function:
-    Timeout: 30
+    Timeout: 5
 
 Resources:
   Function:
@@ -15,6 +15,12 @@ Resources:
       CodeUri: src
       Handler: app.handler
       Runtime: python3.9
+      Policies:
+        - SSMParameterReadPolicy:
+            ParameterName: "eliasb/dynamodb_table_name"
+      Environment:
+        Variables:
+          DYNAMO_TABLE_SSM: "/eliasb/dynamodb_table_name"
       Events:
         Api:
           Type: HttpApi
