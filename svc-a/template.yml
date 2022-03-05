@@ -7,6 +7,10 @@ Globals:
     Timeout: 5
 
 Parameters:
+  HostedZoneId:
+    Type: AWS::SSM::Parameter::Value<String>
+    Description: Hosted Zone ID
+    Default: /eliasb/hosted_zone_id
   TableName:
     Type: AWS::SSM::Parameter::Value<String>
     Description: Name of the DynamoDB table
@@ -33,11 +37,21 @@ Resources:
           Properties:
             ApiId: !Ref Api
 
+  Certificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: svca.aws.eliasbrange.dev
+      DomainValidationOptions:
+        - DomainName: svca.aws.eliasbrange.dev
+          HostedZoneId: !Ref HostedZoneId
+      ValidationMethod: DNS
+
   Api:
     Type: AWS::Serverless::HttpApi
-
-Outputs:
-  ApiUrl:
-    Description: URL of your API endpoint
-    Value:
-      Fn::Sub: 'https://${Api}.execute-api.${AWS::Region}.${AWS::URLSuffix}/'
+    Properties:
+      DisableExecuteApiEndpoint: true
+      Domain:
+        CertificateArn: !Ref Certificate
+        DomainName: svca.aws.eliasbrange.dev
+        Route53:
+          HostedZoneId: !Ref HostedZoneId
