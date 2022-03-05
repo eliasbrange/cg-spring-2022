@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket = "elias-brange-ci-cd"
-    key    = "terraform/state-shared.tfstate"
+    key    = "terraform/state-databases.tfstate"
     region = "eu-west-1"
   }
   required_providers {
