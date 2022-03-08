@@ -23,3 +23,9 @@ resource "aws_cognito_user_pool_domain" "pool_domain" {
   certificate_arn = aws_acm_certificate.cert.arn
   user_pool_id    = aws_cognito_user_pool.pool.id
 }
+
+resource "aws_ssm_parameter" "pool_ssm" {
+  name  = "/eliasb/cognito_user_pool"
+  type  = "String"
+  value = aws_cognito_user_pool.pool.id
+}
