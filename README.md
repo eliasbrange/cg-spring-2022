@@ -1,5 +1,4 @@
-# Operations Development Competence Group Spring 2022
-
+# Operations Development CG - Spring 2022
 This repository contains various experiments in AWS done as part of the Operations Development Competence Group at [13|37](https://1337.tech/) in spring 2022.
 
 ## Contents
