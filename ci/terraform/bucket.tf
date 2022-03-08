@@ -3,8 +3,8 @@ resource "aws_s3_bucket" "ci_bucket" {
 }
 
 resource "aws_s3_bucket_versioning" "ci_bucket_versioning" {
-    bucket = aws_s3_bucket.ci_bucket.id
-    versioning_configuration {
-        status = "Enabled"
-    }
+  bucket = aws_s3_bucket.ci_bucket.id
+  versioning_configuration {
+    status = "Enabled"
+  }
 }

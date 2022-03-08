@@ -1,11 +1,11 @@
 resource "aws_dynamodb_table" "dynamo_table" {
   name = "elias-brange-dynamodb"
 
-  billing_mode = "PROVISIONED"
-  read_capacity = 2
+  billing_mode   = "PROVISIONED"
+  read_capacity  = 2
   write_capacity = 2
 
-  hash_key = "PK"
+  hash_key  = "PK"
   range_key = "SK"
 
   attribute {
@@ -20,7 +20,7 @@ resource "aws_dynamodb_table" "dynamo_table" {
 }
 
 resource "aws_ssm_parameter" "dynamo_table_name" {
-  name = "/eliasb/dynamodb_table_name"
-  type = "String"
-  value = "${aws_dynamodb_table.dynamo_table.name}"
+  name  = "/eliasb/dynamodb_table_name"
+  type  = "String"
+  value = aws_dynamodb_table.dynamo_table.name
 }
