@@ -7,6 +7,9 @@ Globals:
     Timeout: 5
 
 Parameters:
+  Domain:
+    Type: String
+    Default: svca.aws.eliasbrange.dev
   HostedZoneId:
     Type: AWS::SSM::Parameter::Value<String>
     Description: Hosted Zone ID
@@ -15,6 +18,14 @@ Parameters:
     Type: AWS::SSM::Parameter::Value<String>
     Description: Name of the DynamoDB table
     Default: /eliasb/dynamodb_table_name
+  CognitoPool:
+    Type: AWS::SSM::Parameter::Value<String>
+    Description: Cognito pool id
+    Default: /eliasb/cognito_user_pool
+  CognitoClientId:
+    Type: AWS::SSM::Parameter::Value<String>
+    Description: Cognito pool id
+    Default: /eliasb/cognito_client_id
 
 Resources:
   Function:
@@ -40,9 +51,9 @@ Resources:
   Certificate:
     Type: AWS::CertificateManager::Certificate
     Properties:
-      DomainName: svca.aws.eliasbrange.dev
+      DomainName: !Ref Domain
       DomainValidationOptions:
-        - DomainName: svca.aws.eliasbrange.dev
+        - DomainName: !Ref Domain
           HostedZoneId: !Ref HostedZoneId
       ValidationMethod: DNS
 
@@ -50,8 +61,17 @@ Resources:
     Type: AWS::Serverless::HttpApi
     Properties:
       DisableExecuteApiEndpoint: true
+      Auth:
+        Authorizers:
+          CognitoAuth:
+            IdentitySource: "$request.header.Authorization"
+            JwtConfiguration:
+              audience:
+                - !Ref CognitoClientId
+              issuer: !Sub "https://cognito-idp.${AWS::Region}.amazonaws.com/${CognitoPool}"
+        DefaultAuthorizer: CognitoAuth
       Domain:
         CertificateArn: !Ref Certificate
-        DomainName: svca.aws.eliasbrange.dev
+        DomainName: !Ref Domain
         Route53:
           HostedZoneId: !Ref HostedZoneId
