@@ -1,0 +1,77 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Cognito Token API
+
+Globals:
+  Function:
+    Timeout: 5
+
+Parameters:
+  HostedZoneId:
+    Type: AWS::SSM::Parameter::Value<String>
+    Description: Hosted Zone ID
+    Default: /eliasb/hosted_zone_id
+  CognitoPool:
+    Type: AWS::SSM::Parameter::Value<String>
+    Description: Cognito pool id
+    Default: /eliasb/cognito_user_pool
+  Domain:
+    Type: String
+    Default: token.aws.eliasbrange.dev
+
+Resources:
+  Function:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: "TokenAPI"
+      MemorySize: 128
+      CodeUri: src
+      Handler: app.handler
+      Runtime: python3.9
+      Environment:
+        Variables:
+          CLIENT_ID: !Ref CognitoClient
+          REDIRECT_URI: !Sub "https://${Domain}/callback"
+      Events:
+        Api:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Api
+
+  Certificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: !Ref Domain
+      DomainValidationOptions:
+        - DomainName: !Ref Domain
+          HostedZoneId: !Ref HostedZoneId
+      ValidationMethod: DNS
+
+  Api:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      DisableExecuteApiEndpoint: true
+      Domain:
+        CertificateArn: !Ref Certificate
+        DomainName: !Ref Domain
+        Route53:
+          HostedZoneId: !Ref HostedZoneId
+
+  CognitoClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      UserPoolId: !Ref CognitoPool
+      ClientName: TokenApi
+      AllowedOAuthFlowsUserPoolClient: true
+      AllowedOAuthFlows:
+        - code
+      AllowedOAuthScopes:
+        - openid
+        - profile
+      CallbackURLs:
+        - !Sub "https://${Domain}/callback"
+      DefaultRedirectURI: !Sub "https://${Domain}/callback"
+      SupportedIdentityProviders:
+        - COGNITO
+
+
