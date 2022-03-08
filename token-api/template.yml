@@ -74,4 +74,9 @@ Resources:
       SupportedIdentityProviders:
         - COGNITO
 
-
+  CognitoClientSSM:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Name: /eliasb/cognito_client_id
+      Value: !Ref CognitoClient
