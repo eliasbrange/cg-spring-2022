@@ -25,5 +25,9 @@ Includes a hosted zone, with an external DNS.
 ### Service A
 A sample Python FastAPI application that uses DynamoDB for storage and Cognito for authentication.
 
+*Deployed with AWS SAM*
+
 ### Token API
 An API to fetch access and id tokens from the Cognito User Pool.
+
+*Deployed with AWS SAM*
