@@ -43,10 +43,26 @@ Resources:
         Variables:
           TABLE_NAME: !Ref TableName
       Events:
-        Api:
+        DefaultEndpoint:
           Type: HttpApi
           Properties:
             ApiId: !Ref Api
+        DocsEndpoint:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Api
+            Path: /docs
+            Method: GET
+            Auth:
+              Authorizer: NONE
+        OpenAPIJsonEndpoint:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Api
+            Path: /openapi.json
+            Method: GET
+            Auth:
+              Authorizer: NONE
 
   Certificate:
     Type: AWS::CertificateManager::Certificate
