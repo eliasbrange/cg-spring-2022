@@ -22,7 +22,7 @@ Includes a hosted zone, with an external DNS.
 
 *Deployed with Terraform*
 
-### Service A
+### Animals API
 A sample Python FastAPI application that uses DynamoDB for storage and Cognito for authentication.
 
 *Deployed with AWS SAM*
