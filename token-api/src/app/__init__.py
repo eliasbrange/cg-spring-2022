@@ -11,10 +11,12 @@ AUTH_URL = "https://auth.aws.eliasbrange.dev"
 CLIENT_ID = os.environ["CLIENT_ID"]
 REDIRECT_URI = os.environ["REDIRECT_URI"]
 
+
 @app.get("/")
 def login():
     url = f"{AUTH_URL}/authorize?response_type=code&client_id={CLIENT_ID}&redirect_uri={REDIRECT_URI}"  # noqa
     return RedirectResponse(url)
+
 
 @app.get("/callback")
 def callback(code: str):
@@ -33,5 +35,6 @@ def callback(code: str):
         "id_token": response["id_token"],
         "access_token": response["access_token"],
     }
+
 
 handler = Mangum(app)

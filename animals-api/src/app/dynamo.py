@@ -34,7 +34,7 @@ def post_item(animal, animal_id, value):
 
 def list_items(animal):
     res = table.query(
-        KeyConditionExpression=Key("PK").eq(animal)
+        KeyConditionExpression=Key("PK").eq(animal),
     )
 
     return [
