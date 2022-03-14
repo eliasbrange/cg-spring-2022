@@ -1,0 +1,93 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Cats API
+
+Globals:
+  Function:
+    Timeout: 5
+
+Parameters:
+  Domain:
+    Type: String
+    Default: cats.aws.eliasbrange.dev
+  HostedZoneId:
+    Type: AWS::SSM::Parameter::Value<String>
+    Description: Hosted Zone ID
+    Default: /eliasb/hosted_zone_id
+  TableName:
+    Type: AWS::SSM::Parameter::Value<String>
+    Description: Name of the DynamoDB table
+    Default: /eliasb/dynamodb_table_name
+  CognitoPool:
+    Type: AWS::SSM::Parameter::Value<String>
+    Description: Cognito pool id
+    Default: /eliasb/cognito_user_pool
+  CognitoClientId:
+    Type: AWS::SSM::Parameter::Value<String>
+    Description: Cognito pool id
+    Default: /eliasb/cognito_client_id
+
+Resources:
+  Function:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: "CatsAPI"
+      MemorySize: 128
+      CodeUri: src
+      Handler: app.handler
+      Runtime: python3.9
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref TableName
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref TableName
+      Events:
+        DefaultEndpoint:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Api
+        DocsEndpoint:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Api
+            Path: /docs
+            Method: GET
+            Auth:
+              Authorizer: NONE
+        OpenAPIJsonEndpoint:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Api
+            Path: /openapi.json
+            Method: GET
+            Auth:
+              Authorizer: NONE
+
+  Certificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: !Ref Domain
+      DomainValidationOptions:
+        - DomainName: !Ref Domain
+          HostedZoneId: !Ref HostedZoneId
+      ValidationMethod: DNS
+
+  Api:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      DisableExecuteApiEndpoint: true
+      Auth:
+        Authorizers:
+          CognitoAuth:
+            IdentitySource: "$request.header.Authorization"
+            JwtConfiguration:
+              audience:
+                - !Ref CognitoClientId
+              issuer: !Sub "https://cognito-idp.${AWS::Region}.amazonaws.com/${CognitoPool}"
+        DefaultAuthorizer: CognitoAuth
+      Domain:
+        CertificateArn: !Ref Certificate
+        DomainName: !Ref Domain
+        Route53:
+          HostedZoneId: !Ref HostedZoneId

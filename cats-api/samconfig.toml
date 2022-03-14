@@ -1,11 +1,11 @@
 version = 0.1
 
 [default.global.parameters]
-stack_name = "eliasb-animals-api"
+stack_name = "eliasb-cats-api"
 
 [default.deploy]
 [default.deploy.parameters]
 confirm_changeset = false
 capabilities = "CAPABILITY_IAM"
-s3_prefix = "animals-api"
+s3_prefix = "cats-api"
 region = "eu-west-1"
