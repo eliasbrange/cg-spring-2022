@@ -7,5 +7,6 @@ stack_name = "eliasb-cats-api"
 [default.deploy.parameters]
 confirm_changeset = false
 capabilities = "CAPABILITY_IAM"
+s3_bucket = "elias-brange-ci-cd"
 s3_prefix = "cats-api"
 region = "eu-west-1"

@@ -7,5 +7,6 @@ stack_name = "eliasb-edge-api"
 [default.deploy.parameters]
 confirm_changeset = false
 capabilities = "CAPABILITY_IAM"
+s3_bucket = "elias-brange-ci-cd-us-east-1"
 s3_prefix = "edge-api"
 region = "us-east-1"

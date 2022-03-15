@@ -7,5 +7,6 @@ stack_name = "eliasb-token-api"
 [default.deploy.parameters]
 confirm_changeset = false
 capabilities = "CAPABILITY_IAM"
+s3_bucket = "elias-brange-ci-cd"
 s3_prefix = "token-api"
 region = "eu-west-1"
