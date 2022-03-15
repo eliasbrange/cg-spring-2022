@@ -58,6 +58,7 @@ Resources:
               OriginSSLProtocols:
                 - TLSv1.2
         DefaultCacheBehavior:
+          Compress: true
           AllowedMethods:
             - GET
             - HEAD
@@ -66,23 +67,37 @@ Resources:
             - PATCH
             - POST
             - DELETE
-          DefaultTTL: 0
-          ForwardedValues:
-            Cookies:
-              Forward: none
-            QueryString: true
-            Headers:
-              - '*'
+          CachePolicyId: !Ref CloudFrontCachePolicy
           TargetOriginId: Origin
           LambdaFunctionAssociations:
-            -
-              EventType: origin-request
+            - EventType: origin-request
               LambdaFunctionARN: !Ref OriginRequestFunction.Version
           ViewerProtocolPolicy: redirect-to-https
         ViewerCertificate:
           AcmCertificateArn: !Ref Certificate
           SslSupportMethod: sni-only
           MinimumProtocolVersion: TLSv1.2_2021
+
+  CloudFrontCachePolicy:
+    Type: AWS::CloudFront::CachePolicy
+    Properties:
+      CachePolicyConfig:
+        Name: EdgeAPICachePolicy
+        MinTTL: 5
+        DefaultTTL: 30
+        MaxTTL: 60
+        ParametersInCacheKeyAndForwardedToOrigin:
+          EnableAcceptEncodingBrotli: true
+          EnableAcceptEncodingGzip: true
+          CookiesConfig:
+            CookieBehavior: none
+          HeadersConfig:
+            HeaderBehavior: whitelist
+            Headers:
+              - 'Authorization'
+          QueryStringsConfig:
+            QueryStringBehavior: all
+
 
   Certificate:
     Type: AWS::CertificateManager::Certificate
