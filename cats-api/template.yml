@@ -32,7 +32,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: "CatsAPI"
-      MemorySize: 128
+      MemorySize: 1024
       CodeUri: src
       Handler: app.handler
       Runtime: python3.9

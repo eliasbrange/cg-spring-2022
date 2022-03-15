@@ -17,6 +17,7 @@ Resources:
     DeletionPolicy: Retain
     Properties:
       FunctionName: "EdgeAPIOriginRequest"
+      MemorySize: 1024
       CodeUri: origin-request/
       Handler: app.handler
       Runtime: python3.9
