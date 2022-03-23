@@ -22,12 +22,22 @@ Includes a hosted zone, with an external DNS.
 
 *Deployed with Terraform*
 
-### Animals API
+### Cats API
+A sample Python FastAPI application that uses DynamoDB for storage and Cognito for authentication.
+
+*Deployed with AWS SAM*
+
+### Dogs API
 A sample Python FastAPI application that uses DynamoDB for storage and Cognito for authentication.
 
 *Deployed with AWS SAM*
 
 ### Token API
 An API to fetch access and id tokens from the Cognito User Pool.
+
+*Deployed with AWS SAM*
+
+### Edge API
+An API running on Lambda@Edge and CloudFront that consolidates Cats & Dogs APIs.
 
 *Deployed with AWS SAM*
