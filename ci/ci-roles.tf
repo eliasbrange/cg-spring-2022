@@ -124,7 +124,14 @@ module "sam_deploy_role" {
   state_buckets_policy_arn = aws_iam_policy.state_buckets_policy.arn
   permissions = [
     "lambda:*",
+    "cloudformation:*",
+    "apigateway:*",
+    "iam:*",
+    "acm:*",
+    "route53:*",
     "ssm:*",
+    "cognito-idp:*",
+    "cloudfront:*",
   ]
 }
 

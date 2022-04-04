@@ -1,11 +1,11 @@
-name: "CATS API - Deploy"
+name: "EDGE API - Deploy"
 
 on:
   push:
     branches:
       - main
-    paths:
-      - "cats-api/**"
+    # paths:
+      # - "edge-api/**"
 
 permissions:
   id-token: write
@@ -20,5 +20,5 @@ jobs:
       - name: Deploy with SAM
         uses: ./.github/actions/sam-deploy
         with:
-          work_dir: cats-api
+          work_dir: edge-api
           role: ${{ secrets.SAM_DEPLOY_ROLE }}
