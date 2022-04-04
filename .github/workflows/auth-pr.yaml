@@ -7,7 +7,7 @@ on:
 
 jobs:
   terraform-plan:
-    uses: ./.github/common/terraform-plan.yml
+    uses: ./.github/workflows/terraform-plan.yml
     with:
       work_dir: auth
       project_name: Auth
