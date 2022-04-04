@@ -64,6 +64,8 @@ module "db_pr_role" {
   state_buckets_policy_arn = aws_iam_policy.state_buckets_policy.arn
   permissions = [
     "dynamodb:Describe*",
+    "dynamodb:Get*",
+    "dynamodb:List*",
     "ssm:Describe*",
     "ssm:Get*",
     "ssm:List*",
