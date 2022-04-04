@@ -16,6 +16,5 @@ jobs:
     uses: ./.github/workflows/terraform-plan.yaml
     with:
       work_dir: dns
-      project_name: DNS
     secrets:
       role: ${{ secrets.DNS_PR_ROLE }}

@@ -16,6 +16,5 @@ jobs:
     uses: ./.github/workflows/terraform-plan.yaml
     with:
       work_dir: databases
-      project_name: Databases
     secrets:
       role: ${{ secrets.DB_PR_ROLE }}
