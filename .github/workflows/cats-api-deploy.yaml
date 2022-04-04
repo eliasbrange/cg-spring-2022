@@ -23,5 +23,4 @@ jobs:
       - name: Deploy with SAM
         uses: ./.github/actions/sam-deploy
         with:
-          work_dir: cats-api
           role: ${{ secrets.SAM_DEPLOY_ROLE }}
