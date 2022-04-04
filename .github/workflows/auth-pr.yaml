@@ -21,4 +21,4 @@ jobs:
       work_dir: auth
       project_name: Auth
     secrets:
-      role: {{ secrets.AUTH_PR_ROLE }}
+      role: ${{ secrets.AUTH_PR_ROLE }}

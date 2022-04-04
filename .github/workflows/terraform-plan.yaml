@@ -28,7 +28,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-region: eu-west-1
-          role-to-assume: {{ secrets.role }}
+          role-to-assume: ${{ secrets.role }}
           role-session-name: TerraformPlanSession
 
       - name: Setup Terraform
