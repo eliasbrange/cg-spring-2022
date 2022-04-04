@@ -17,6 +17,7 @@ module "auth_pr_role" {
     "route53:List*",
     "ssm:Describe*",
     "ssm:Get*",
+    "ssm:List*",
   ]
 }
 
@@ -48,6 +49,7 @@ module "auth_deploy_role" {
     "route53:List*",
     "ssm:Describe*",
     "ssm:Get*",
+    "ssm:List*",
     "ssm:PutParameter",
   ]
 }
