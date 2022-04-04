@@ -6,17 +6,17 @@ module "auth_pr_role" {
   oidc_provider_arn        = aws_iam_openid_connect_provider.github.arn
   state_buckets_policy_arn = aws_iam_policy.state_buckets_policy.arn
   permissions = [
-    "acm:DescribeCertificate",
-    "cognito-idp:DescribeUserPool",
-    "cognito-idp:DescribeUserPoolDomain",
-    "cognito-idp:GetUserPoolMfaConfig",
-    "route53:ChangeResourceRecordSets",
-    "route53:GetHostedZone",
-    "route53:ListHostedZones",
-    "route53:ListResourceRecordSets",
-    "ssm:DescribeParameter",
-    "ssm:GetParameter",
-    # "acm:List*",
+    "acm:Describe*",
+    "acm:Get*",
+    "acm:List*",
+    "cognito-idp:Describe*",
+    "cognito-idp:Get*",
+    "cognito-idp:List*",
+    "route53:Describe*",
+    "route53:Get*",
+    "route53:List*",
+    "ssm:Describe*",
+    "ssm:Get*",
   ]
 }
 
@@ -29,25 +29,26 @@ module "auth_deploy_role" {
   state_buckets_policy_arn = aws_iam_policy.state_buckets_policy.arn
   permissions = [
     "acm:DeleteCertificate",
-    "acm:DescribeCertificate",
+    "acm:Describe*",
+    "acm:Get*",
+    "acm:List*",
     "acm:RequestCertificate",
     "cognito-idp:CreateUserPool",
     "cognito-idp:CreateUserPoolDomain",
     "cognito-idp:DeleteUserPool",
     "cognito-idp:DeleteUserPoolDomain",
-    "cognito-idp:DescribeUserPool",
-    "cognito-idp:DescribeUserPoolDomain",
-    "cognito-idp:GetUserPoolMfaConfig",
+    "cognito-idp:Describe*",
+    "cognito-idp:Get*",
+    "cognito-idp:List*",
     "cognito-idp:SetUserPoolMfaConfig",
     "cognito-idp:UpdateUserPool",
     "route53:ChangeResourceRecordSets",
-    "route53:GetHostedZone",
-    "route53:ListHostedZones",
-    "route53:ListResourceRecordSets",
-    "ssm:DescribeParameter",
-    "ssm:GetParameter",
+    "route53:Describe*",
+    "route53:Get*",
+    "route53:List*",
+    "ssm:Describe*",
+    "ssm:Get*",
     "ssm:PutParameter",
-    # "acm:List*",
   ]
 }
 
