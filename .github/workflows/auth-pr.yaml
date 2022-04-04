@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   terraform-plan:
-    uses: ./.github/workflows/terraform-plan.yml
+    uses: ./.github/workflows/terraform-plan.yaml
     with:
       work_dir: auth
       project_name: Auth
