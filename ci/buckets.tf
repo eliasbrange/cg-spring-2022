@@ -11,12 +11,12 @@ resource "aws_s3_bucket_versioning" "ci_bucket_versioning" {
 
 resource "aws_s3_bucket" "ci_bucket_useast" {
   provider = aws.useast
-  bucket = "elias-brange-ci-cd-us-east-1"
+  bucket   = "elias-brange-ci-cd-us-east-1"
 }
 
 resource "aws_s3_bucket_versioning" "ci_bucket_versioning-useast" {
   provider = aws.useast
-  bucket = aws_s3_bucket.ci_bucket_useast.id
+  bucket   = aws_s3_bucket.ci_bucket_useast.id
   versioning_configuration {
     status = "Enabled"
   }

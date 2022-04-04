@@ -60,11 +60,13 @@ jobs:
         if: github.event_name == 'pull_request'
         env:
           PLAN: ${{ steps.plan.outputs.stdout }}
+          ERR: ${{ steps.plan.outputs.stderr }}
         run: |
           PLAN=$(echo "$PLAN" | sed -r 's/^([[:blank:]]*)([-+~])/\2\1/g')
           PLAN=$(echo "$PLAN" | sed -r 's/^~/!/g')
           echo "PLAN<<EOF" >> $GITHUB_ENV
           echo "$PLAN" >> $GITHUB_ENV
+          echo "$ERR" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
       - uses: marocchino/sticky-pull-request-comment@39c5b5dc7717447d0cba270cd115037d32d28443
@@ -78,9 +80,11 @@ jobs:
             #### Terraform Validation 🤖`${{ steps.validate.outcome }}`
 
             <details><summary>Validation Output</summary>
-            \`\`\`\n
+
+            ```
             ${{ steps.validate.outputs.stdout }}
-            \`\`\`
+            ```
+
             </details>
 
             #### Terraform Plan 📖`${{ steps.plan.outcome }}`
@@ -93,7 +97,7 @@ jobs:
 
             </details>
 
-            *Pusher: @${{ github.actor }}, Action: `${{ github.event_name }}, Working Directory: \`${{ inputs.work_dir }}\`, Workflow: \`${{ github.workflow }}\`*
+            *Pusher: @${{ github.actor }}, Action: `${{ github.event_name }}`, Working Directory: `${{ inputs.work_dir }}`, Workflow: `${{ github.workflow }}`*
 
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
