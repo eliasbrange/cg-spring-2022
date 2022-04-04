@@ -4,9 +4,16 @@ description: "Deploys a SAM application"
 inputs:
   role:
     required: true
+    type: string
+  work_dir:
+    required: true
+    type: string
 
 runs:
   using: "composite"
+  defaults:
+    run:
+      working-directory: ${{ inputs.work_dir }}
   steps:
     - name: Checkout
       uses: actions/checkout@v3
