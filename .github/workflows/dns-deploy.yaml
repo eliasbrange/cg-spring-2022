@@ -1,0 +1,19 @@
+name: "DNS - Deploy"
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "dns/**"
+
+permissions:
+  id-token: write
+
+jobs:
+  terraform-apply:
+    uses: ./.github/workflows/terraform-apply.yaml
+    with:
+      work_dir: dns
+    secrets:
+      role: ${{ secrets.DNS_DEPLOY_ROLE }}

@@ -83,6 +83,36 @@ module "db_deploy_role" {
   ]
 }
 
+module "dns_pr_role" {
+  source = "./ci-role"
+
+  name                     = "dns-read-role"
+  subject_claim            = "repo:eliasbrange/cg-spring-2022:pull_request"
+  oidc_provider_arn        = aws_iam_openid_connect_provider.github.arn
+  state_buckets_policy_arn = aws_iam_policy.state_buckets_policy.arn
+  permissions = [
+    "route53:Describe*",
+    "route53:Get*",
+    "route53:List*",
+    "ssm:Describe*",
+    "ssm:Get*",
+    "ssm:List*",
+  ]
+}
+
+module "dns_deploy_role" {
+  source = "./ci-role"
+
+  name                     = "dns-deploy-role"
+  subject_claim            = "repo:eliasbrange/cg-spring-2022:ref:refs/heads/main"
+  oidc_provider_arn        = aws_iam_openid_connect_provider.github.arn
+  state_buckets_policy_arn = aws_iam_policy.state_buckets_policy.arn
+  permissions = [
+    "route53:*",
+    "ssm:*",
+  ]
+}
+
 resource "aws_iam_policy" "state_buckets_policy" {
   name        = "eliasb-access-state-buckets"
   description = "Access to state buckets"
