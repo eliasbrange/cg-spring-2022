@@ -28,6 +28,10 @@ runs:
 
     - uses: aws-actions/setup-sam@v1
 
+    - run: pip3 install wheel
+      working-directory: ${{ inputs.work_dir }}
+      shell: bash
+
     - run: sam build
       working-directory: ${{ inputs.work_dir }}
       shell: bash
