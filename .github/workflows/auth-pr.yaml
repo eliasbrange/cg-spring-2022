@@ -1,0 +1,15 @@
+name: "AUTH - Pull request"
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  terraform-plan:
+    uses: ./.github/common/terraform-plan.yml
+    with:
+      tenant_id: 97e05ce0-33cf-45fb-8935-24a7f2996e30
+      client_id: 1137f407-9692-4cc0-b428-f944661c032d
+      work_dir: auth
+      project_name: Auth
