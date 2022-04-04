@@ -78,9 +78,9 @@ jobs:
             #### Terraform Validation 🤖`${{ steps.validate.outcome }}`
 
             <details><summary>Validation Output</summary>
-            \`\`\`\n
+            ```
             ${{ steps.validate.outputs.stdout }}
-            \`\`\`
+            ```
             </details>
 
             #### Terraform Plan 📖`${{ steps.plan.outcome }}`
@@ -93,7 +93,7 @@ jobs:
 
             </details>
 
-            *Pusher: @${{ github.actor }}, Action: `${{ github.event_name }}, Working Directory: \`${{ inputs.work_dir }}\`, Workflow: \`${{ github.workflow }}\`*
+            *Pusher: @${{ github.actor }}, Action: `${{ github.event_name }}`, Working Directory: `${{ inputs.work_dir }}`, Workflow: `${{ github.workflow }}`*
 
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
