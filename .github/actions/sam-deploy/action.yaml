@@ -15,8 +15,8 @@ runs:
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-region: eu-west-1
-        role-to-assume: ${{ secrets.role }}
-        role-session-name: TerraformApplySession
+        role-to-assume: ${{ inputs.role }}
+        role-session-name: SamDeploySession
 
     - uses: actions/setup-python@v2
       with:
