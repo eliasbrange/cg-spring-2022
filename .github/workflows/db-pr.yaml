@@ -1,11 +1,11 @@
-name: "AUTH - Pull request"
+name: "DATABASES - Pull request"
 
 on:
   pull_request:
     branches:
       - main
     paths:
-      - "auth/**"
+      - "databases/**"
 
 permissions:
   id-token: write
@@ -15,7 +15,6 @@ jobs:
   terraform-plan:
     uses: ./.github/workflows/terraform-plan.yaml
     with:
-      work_dir: auth
-      project_name: Auth
+      work_dir: databases
     secrets:
-      role: ${{ secrets.AUTH_PR_ROLE }}
+      role: ${{ secrets.DB_PR_ROLE }}
