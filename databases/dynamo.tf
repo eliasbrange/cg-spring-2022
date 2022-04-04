@@ -2,8 +2,8 @@ resource "aws_dynamodb_table" "dynamo_table" {
   name = "elias-brange-dynamodb"
 
   billing_mode   = "PROVISIONED"
-  read_capacity  = 2
-  write_capacity = 2
+  read_capacity  = 1
+  write_capacity = 1
 
   hash_key  = "PK"
   range_key = "SK"
