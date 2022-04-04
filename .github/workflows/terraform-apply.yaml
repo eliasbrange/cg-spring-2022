@@ -3,9 +3,6 @@ name: "Terraform Apply"
 on:
   workflow_call:
     inputs:
-      project_name:
-        required: true
-        type: string
       work_dir:
         required: true
         type: string

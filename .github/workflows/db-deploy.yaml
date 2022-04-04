@@ -1,11 +1,11 @@
-name: "AUTH - Deploy"
+name: "DATABASES - Deploy"
 
 on:
   push:
     branches:
       - main
     paths:
-      - "auth/**"
+      - "databases/**"
 
 permissions:
   id-token: write
@@ -14,6 +14,6 @@ jobs:
   terraform-apply:
     uses: ./.github/workflows/terraform-apply.yaml
     with:
-      work_dir: auth
+      work_dir: databases
     secrets:
-      role: ${{ secrets.AUTH_DEPLOY_ROLE }}
+      role: ${{ secrets.DB_DEPLOY_ROLE }}
