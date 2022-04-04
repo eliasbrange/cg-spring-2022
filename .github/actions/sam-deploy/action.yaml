@@ -1,0 +1,31 @@
+name: "SAM Deploy action"
+description: "Deploys a SAM application"
+
+inputs:
+  role:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-region: eu-west-1
+        role-to-assume: ${{ secrets.role }}
+        role-session-name: TerraformApplySession
+
+    - uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+
+    - uses: aws-actions/setup-sam@v1
+
+    - run: sam build
+      shell: bash
+
+    - run: sam deploy --no-fail-on-empty-changeset --no-confirm-changeset
+      shell: bash

@@ -22,3 +22,6 @@ output "dns_deploy_role_arn" {
   value = module.dns_deploy_role.role_arn
 }
 
+output "sam_deploy_role_arn" {
+  value = module.sam_deploy_role.role_arn
+}

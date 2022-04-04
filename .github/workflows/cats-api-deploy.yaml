@@ -1,0 +1,27 @@
+name: "CATS API - Deploy"
+
+on:
+  push:
+    branches:
+      - main
+    # paths:
+      # - "cats-api/**"
+
+permissions:
+  id-token: write
+
+jobs:
+  sam-deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cats-api
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Deploy with SAM
+        uses: ./.github/actions/deploy
+        with:
+          work_dir: cats-api
+          role: ${{ secrets.SAM_DEPLOY_ROLE }}
