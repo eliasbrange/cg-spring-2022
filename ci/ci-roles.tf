@@ -1,60 +1,24 @@
-resource "aws_iam_role" "auth-pr" {
-  name = "eliasb-auth-pr"
-  assume_role_policy = jsonencode({
-    "Version" : "2012-10-17",
-    "Statement" : [
-      {
-        "Effect" : "Allow",
-        "Action" : "sts:AssumeRoleWithWebIdentity"
-        "Principal" : {
-          "Federated" : aws_iam_openid_connect_provider.github.arn
-        },
-        "Condition" : {
-          "StringEquals" : {
-            "token.actions.githubusercontent.com:sub" : "repo:eliasbrange/cg-spring-2022:pull_request"
-          }
-        }
-      }
-    ]
-  })
+module "auth-pr-role" {
+  source = "./ci-role"
+
+  name                     = "auth-read-role"
+  subject_claim            = "repo:eliasbrange/cg-spring-2022:pull_request"
+  oidc_provider_arn        = aws_iam_openid_connect_provider.github.arn
+  state_buckets_policy_arn = aws_iam_policy.state_buckets_policy.arn
+  permissions = [
+    "route53:List*",
+    "route53:Get*",
+    "acm:Describe*",
+    "acm:List*",
+    "cognito-idp:Describe*",
+    "cognito-idp:Get*",
+    "ssm:Get*",
+    "ssm:List*",
+    "ssm:Describe*",
+  ]
 }
 
-resource "aws_iam_role_policy_attachment" "auth-pr-buckets" {
-  role       = aws_iam_role.auth-pr.name
-  policy_arn = aws_iam_policy.state-buckets.arn
-}
-
-resource "aws_iam_role_policy_attachment" "auth-pr-read" {
-  role       = aws_iam_role.auth-pr.name
-  policy_arn = aws_iam_policy.auth-read.arn
-}
-
-resource "aws_iam_policy" "auth-read" {
-  name = "eliasb-auth-read"
-
-  policy = jsonencode({
-    "Version" : "2012-10-17",
-    "Statement" : [
-      {
-        "Effect" : "Allow",
-        "Action" : [
-          "route53:List*",
-          "route53:Get*",
-          "acm:Describe*",
-          "acm:List*",
-          "cognito-idp:Describe*",
-          "cognito-idp:Get*",
-          "ssm:Get*",
-          "ssm:List*",
-          "ssm:Describe*",
-        ],
-        "Resource" : "*"
-      }
-    ]
-  })
-}
-
-resource "aws_iam_policy" "state-buckets" {
+resource "aws_iam_policy" "state_buckets_policy" {
   name        = "eliasb-access-state-buckets"
   description = "Access to state buckets"
 
