@@ -25,7 +25,7 @@ module "auth_deploy_role" {
   source = "./ci-role"
 
   name                     = "auth-deploy-role"
-  subject_claim            = "repo:eliasbrange/cg-spring-2022:refs/heads/main"
+  subject_claim            = "repo:eliasbrange/cg-spring-2022:ref:refs/heads/main"
   oidc_provider_arn        = aws_iam_openid_connect_provider.github.arn
   state_buckets_policy_arn = aws_iam_policy.state_buckets_policy.arn
   permissions = [
