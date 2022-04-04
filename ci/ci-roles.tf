@@ -24,6 +24,36 @@ resource "aws_iam_role_policy_attachment" "auth-pr-buckets" {
   policy_arn = aws_iam_policy.state-buckets.arn
 }
 
+resource "aws_iam_role_policy_attachment" "auth-pr-read" {
+  role       = aws_iam_role.auth-pr.name
+  policy_arn = aws_iam_policy.auth-read.arn
+}
+
+resource "aws_iam_policy" "auth-read" {
+  name = "eliasb-auth-read"
+
+  policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Effect" : "Allow",
+        "Action" : [
+          "route53:List*",
+          "route53:Get*",
+          "acm:Describe*",
+          "acm:List*",
+          "cognito-idp:Describe*",
+          "cognito-idp:Get*",
+          "ssm:Get*",
+          "ssm:List*",
+          "ssm:Describe*",
+        ],
+        "Resource" : "*"
+      }
+    ]
+  })
+}
+
 resource "aws_iam_policy" "state-buckets" {
   name        = "eliasb-access-state-buckets"
   description = "Access to state buckets"
