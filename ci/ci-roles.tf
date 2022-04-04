@@ -1,4 +1,4 @@
-module "auth-pr-role" {
+module "auth_pr_role" {
   source = "./ci-role"
 
   name                     = "auth-read-role"
@@ -6,15 +6,48 @@ module "auth-pr-role" {
   oidc_provider_arn        = aws_iam_openid_connect_provider.github.arn
   state_buckets_policy_arn = aws_iam_policy.state_buckets_policy.arn
   permissions = [
-    "route53:List*",
-    "route53:Get*",
-    "acm:Describe*",
-    "acm:List*",
-    "cognito-idp:Describe*",
-    "cognito-idp:Get*",
-    "ssm:Get*",
-    "ssm:List*",
-    "ssm:Describe*",
+    "acm:DescribeCertificate",
+    "cognito-idp:DescribeUserPool",
+    "cognito-idp:DescribeUserPoolDomain",
+    "cognito-idp:GetUserPoolMfaConfig",
+    "route53:ChangeResourceRecordSets",
+    "route53:GetHostedZone",
+    "route53:ListHostedZones",
+    "route53:ListResourceRecordSets",
+    "ssm:DescribeParameter",
+    "ssm:GetParameter",
+    # "acm:List*",
+  ]
+}
+
+module "auth_deploy_role" {
+  source = "./ci-role"
+
+  name                     = "auth-deploy-role"
+  subject_claim            = "repo:eliasbrange/cg-spring-2022:refs/heads/main"
+  oidc_provider_arn        = aws_iam_openid_connect_provider.github.arn
+  state_buckets_policy_arn = aws_iam_policy.state_buckets_policy.arn
+  permissions = [
+    "acm:DeleteCertificate",
+    "acm:DescribeCertificate",
+    "acm:RequestCertificate",
+    "cognito-idp:CreateUserPool",
+    "cognito-idp:CreateUserPoolDomain",
+    "cognito-idp:DeleteUserPool",
+    "cognito-idp:DeleteUserPoolDomain",
+    "cognito-idp:DescribeUserPool",
+    "cognito-idp:DescribeUserPoolDomain",
+    "cognito-idp:GetUserPoolMfaConfig",
+    "cognito-idp:SetUserPoolMfaConfig",
+    "cognito-idp:UpdateUserPool",
+    "route53:ChangeResourceRecordSets",
+    "route53:GetHostedZone",
+    "route53:ListHostedZones",
+    "route53:ListResourceRecordSets",
+    "ssm:DescribeParameter",
+    "ssm:GetParameter",
+    "ssm:PutParameter",
+    # "acm:List*",
   ]
 }
 
