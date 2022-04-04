@@ -11,9 +11,6 @@ inputs:
 
 runs:
   using: "composite"
-  defaults:
-    run:
-      working-directory: ${{ inputs.work_dir }}
   steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -32,7 +29,9 @@ runs:
     - uses: aws-actions/setup-sam@v1
 
     - run: sam build
+      working-directory: ${{ inputs.work_dir }}
       shell: bash
 
     - run: sam deploy --no-fail-on-empty-changeset --no-confirm-changeset
+      working-directory: ${{ inputs.work_dir }}
       shell: bash
