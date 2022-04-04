@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Deploy with SAM
-        uses: ./.github/actions/deploy
+        uses: ./.github/actions/sam-deploy
         with:
           work_dir: cats-api
           role: ${{ secrets.SAM_DEPLOY_ROLE }}
