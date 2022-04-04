@@ -1,0 +1,13 @@
+name: "AUTH - Pull request"
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  terraform-plan:
+    uses: ./.github/common/terraform-plan.yml
+    with:
+      work_dir: auth
+      project_name: Auth
