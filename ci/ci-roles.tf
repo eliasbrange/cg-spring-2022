@@ -51,6 +51,7 @@ module "auth_deploy_role" {
     "ssm:Get*",
     "ssm:List*",
     "ssm:PutParameter",
+    "ssm:DeleteParameter",
   ]
 }
 
