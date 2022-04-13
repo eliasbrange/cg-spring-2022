@@ -24,3 +24,9 @@ resource "aws_ssm_parameter" "dynamo_table_name" {
   type  = "String"
   value = aws_dynamodb_table.dynamo_table.name
 }
+
+resource "aws_ssm_parameter" "test_ssm" {
+  name  = "/eliasb/dynamo_test_ssm"
+  type  = "String"
+  value = aws_dynamodb_table.dynamo_table.name
+}
