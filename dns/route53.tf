@@ -22,3 +22,9 @@ resource "aws_route53_record" "root_record" {
   ttl     = 300
   records = ["127.0.0.1"]
 }
+
+resource "aws_ssm_parameter" "test_ssm" {
+  name  = "/eliasb/dns_test_ssm"
+  type  = "String"
+  value = aws_route53_zone.zone.zone_id
+}
