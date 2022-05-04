@@ -30,6 +30,12 @@ resource "aws_ssm_parameter" "pool_ssm" {
   value = aws_cognito_user_pool.pool.id
 }
 
+resource "aws_ssm_parameter" "pool_ssm2" {
+  name  = "/eliasb/cognito_user_pool2"
+  type  = "String"
+  value = aws_cognito_user_pool.pool.id
+}
+
 resource "aws_ssm_parameter" "test_ssm" {
   name  = "/eliasb/auth_test_ssm"
   type  = "String"

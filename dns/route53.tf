@@ -28,3 +28,9 @@ resource "aws_ssm_parameter" "test_ssm" {
   type  = "String"
   value = aws_route53_zone.zone.zone_id
 }
+
+resource "aws_ssm_parameter" "test_ssm2" {
+  name  = "/eliasb/dns_test_ssm2"
+  type  = "String"
+  value = aws_route53_zone.zone.zone_id
+}
